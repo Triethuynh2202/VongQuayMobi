@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css">
+<link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+<link rel="stylesheet" href="main.css">
+<link rel="stylesheet" href="css/typo/typo.css" />
+<link rel="stylesheet" href="css/hc-canvas-luckwheel.css" />
+<style>
+  .hc-luckywheel{
+    position:fixed;
+    top: 56%;
+    left: 65%;
+    margin-top: -250px;
+    margin-left: -230px;
+  }
+</style>
+
+<body class="bg">
+
+  <div class="header">
+    <i class="fas fa-bars"></i>
+    <h2 class="logo">ITC</h2>
+    <ul class="nav">
+      <li>Trang chủ</li>
+      <li>Giới thiệu</li>
+      <li>Thông báo</li>
+      <li>Thông tin</li>
+      <li>Liên hệ</li>
+    </ul>
+  </div>
+  <div class="footer">
+   <img src="images/back2.png" alt="" width="100%" height="100%">
+    </div>
+<div class="noidung">
+  <img src="back2.png" alt="" width="100%" height="100%">
+  <div class="wrapper typo" id="wrapper">
+    <section id="luckywheel" class="hc-luckywheel">
+      <div class="hc-luckywheel-container">
+        <canvas class="hc-luckywheel-canvas" width="500px" height="500px"
+          >Vòng Xoay May Mắn</canvas
+        >
+      </div>
+      <a class="hc-luckywheel-btn" href="javascript:;">Xoay</a>
+    </section>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
+    <script src="js/hc-canvas-luckwheel.js"></script>
+    <script>
+      var isPercentage = true;
+      var prizes = [
+              {
+                text: "Hẹn bạn lần sau",
+                img: "images/hengaplai.png",
+                percentpage: 0.2 // 30%
+              },
+              {
+                text: "Bình nước ITC ",
+                img: "images/bn.png",
+                number: 1, // 1%,
+                percentpage: 0.05 // 5%
+              },
+              {
+                text: "Gấu bông ITC ",
+                img: "images/GB.png" ,
+                number: 1,
+                percentpage: 0.05 // 5%
+              },
+              {
+                text: "Bộ hồ sơ xét tuyển",
+                img: "images/hsxt.png",
+                number : 1,
+                percentpage: 0.15 // 20%
+              },
+              {
+                text: "Hẹn bạn lần sau",
+                img: "images/hengaplai.png",
+                percentpage: 0.2 // 30%
+              },
+              {
+                text: "Quay lần nữa nhé",
+                img: "images/quaylannua.png",
+                number : 1,
+                percentpage: 0.1 // 10%
+              },
+
+              {
+                text: "Quạt ITC",
+                img: "images/quat.png",
+
+                percentpage: 0.15 // 20%
+              },
+              {
+                text: "Check in nhận quà",
+                img: "images/check.png",
+
+                percentpage: 0.1 // 10%
+              },
+
+            ];
+      document.addEventListener(
+        "DOMContentLoaded",
+        function() {
+          hcLuckywheel.init({
+            id: "luckywheel",
+            config: function(callback) {
+              callback &&
+                callback(prizes);
+            },
+            mode : "both",
+            getPrize: function(callback) {
+              var rand = randomIndex(prizes);
+              var chances = rand;
+              callback && callback([rand, chances]);
+            },
+            gotBack: function(data) {
+              if(data == null){
+                Swal.fire(
+                  'Chương trình kết thúc',
+                  'Đã hết phần thưởng',
+                  'error'
+                )
+              } else if (data == 'Hẹn bạn lần sau'){
+                Swal.fire(
+                  'Bạn không trúng thưởng',
+                  data,
+                  'error'
+                )
+              } else{
+                Swal.fire(
+                  'Đã trúng giải',
+                  data,
+                  'success'
+                )
+              }
+            }
+          });
+        },
+        false
+      );
+      function randomIndex(prizes){
+        if(isPercentage){
+          var counter = 1;
+          for (let i = 0; i < prizes.length; i++) {
+            if(prizes[i].number == 0){
+              counter++
+            }
+          }
+          if(counter == prizes.length){
+            return null
+          }
+          let rand = Math.random();
+          let prizeIndex = null;
+          console.log(rand);
+          switch (true) {
+            case rand < prizes[7].percentpage:
+              prizeIndex = 7 ;
+              break;
+            case rand < prizes[7].percentpage + prizes[6].percentpage:
+              prizeIndex = 6 ;
+              break;
+            case rand < prizes[7].percentpage + prizes[6].percentpage + prizes[5].percentpage:
+              prizeIndex = 5 ;
+              break;
+            case rand < prizes[7].percentpage + prizes[6].percentpage + prizes[5].percentpage + prizes[4].percentpage:
+              prizeIndex = 4 ;
+              break;
+            case rand < prizes[7].percentpage + prizes[6].percentpage + prizes[5].percentpage + prizes[4].percentpage + prizes[3].percentpage:
+              prizeIndex = 3;
+              break;
+            case rand < prizes[7].percentpage + prizes[6].percentpage + prizes[5].percentpage + prizes[4].percentpage + prizes[3].percentpage + prizes[2].percentpage:
+              prizeIndex = 2;
+              break;
+            case rand < prizes[7].percentpage + prizes[6].percentpage + prizes[5].percentpage + prizes[4].percentpage + prizes[3].percentpage + prizes[2].percentpage + prizes[1].percentpage:
+              prizeIndex = 1;
+              break;  
+            case rand < prizes[7].percentpage + prizes[6].percentpage + prizes[5].percentpage + prizes[4].percentpage + prizes[3].percentpage + prizes[2].percentpage + prizes[1].percentpage  + prizes[0].percentpage:
+              prizeIndex = 0;
+              break;  
+          }
+          if(prizes[prizeIndex].number != 0){
+            prizes[prizeIndex].number = prizes[prizeIndex].number - 1
+            return prizeIndex
+          }else{
+            return randomIndex(prizes)
+          }
+        }else{
+          var counter = 0;
+          for (let i = 0; i < prizes.length; i++) {
+            if(prizes[i].number == 0){
+              counter++
+            }
+          }
+          if(counter == prizes.length){
+            return null
+          }
+          var rand = (Math.random() * (prizes.length)) >>> 0;
+          if(prizes[rand].number != 0){
+            prizes[rand].number = prizes[rand].number - 1
+            return rand
+          }else{
+            return randomIndex(prizes)
+          }
+        }
+      }
+    </script>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+<div class="footer">
+  <img src="images/back4.jpg" alt="" width="100%" height="100%">
+   </div>
+<div class="footer">
+<p>Trường Cao Đẳng Công Nghệ Thông Tin Tp. Hồ Chí Minh. </p>
+<p>SĐT: 0938861080</p>
+</div>
+</body>
+</html>
