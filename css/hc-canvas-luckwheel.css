@@ -6,7 +6,7 @@
 }
 .hc-luckywheel {
   position: absolute; 
-  width: 400px; /* Giảm kích thước */
+  width: 380px; /* Giảm kích thước */
   height: 400px;
   border-radius: 50%;
   border: 12px solid #1E90FF; /* Màu xanh biển */
